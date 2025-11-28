@@ -1,0 +1,45 @@
+
+export const fetchSchedule = async (date) => {
+    try {
+        const targetDate = date || new Date().toISOString().split('T')[0];
+        const response = await fetch(`/api-nhl/v1/schedule/${targetDate}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch schedule');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching schedule:', error);
+        throw error;
+    }
+};
+
+export const fetchUpcomingSchedule = () => {
+    const today = new Date().toISOString().split('T')[0];
+    return fetchSchedule(today);
+};
+
+export const fetchRecentResults = async () => {
+    try {
+        // Fetch schedule starting 7 days ago to ensure we find recent games
+        const pastDate = new Date();
+        pastDate.setDate(pastDate.getDate() - 7);
+        const dateStr = pastDate.toISOString().split('T')[0];
+
+        const data = await fetchSchedule(dateStr);
+
+        const today = new Date().toISOString().split('T')[0];
+
+        // Filter out games that are in the future (though 'pastDate' request usually returns past week)
+        const pastDays = data.gameWeek.filter(day => day.date < today);
+
+        return {
+            ...data,
+            gameWeek: pastDays
+        };
+
+    } catch (error) {
+        console.error('Error fetching recent results:', error);
+        throw error;
+    }
+};
