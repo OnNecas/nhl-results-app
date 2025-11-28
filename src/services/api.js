@@ -2,7 +2,14 @@
 export const fetchSchedule = async (date) => {
     try {
         const targetDate = date || new Date().toISOString().split('T')[0];
-        const response = await fetch(`/api-nhl/v1/schedule/${targetDate}`);
+
+        // Use Vercel serverless function in production, Vite proxy in development
+        const isDevelopment = import.meta.env.DEV;
+        const apiUrl = isDevelopment
+            ? `/api-nhl/v1/schedule/${targetDate}`
+            : `/api/schedule?date=${targetDate}`;
+
+        const response = await fetch(apiUrl);
         if (!response.ok) {
             throw new Error('Failed to fetch schedule');
         }
