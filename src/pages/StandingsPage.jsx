@@ -70,11 +70,15 @@ const StandingsPage = () => {
         } else {
             // In conference view, top 8 make playoffs
             if (team.conferenceSequence <= 8) {
-                // Determine if they're a division leader (top 3) or wild card
+                // Top 3 in division are division leaders
                 if (team.divisionSequence <= 3) {
                     return 'playoff-division';
                 } else {
-                    return 'playoff-wildcard';
+                    // Teams 4-8 in conference who aren't top 3 in division are wild cards
+                    // But only if they're in the wild card spots (wildcardSequence 1 or 2)
+                    if (team.wildcardSequence > 0 && team.wildcardSequence <= 2) {
+                        return 'playoff-wildcard';
+                    }
                 }
             }
         }
