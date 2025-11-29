@@ -298,6 +298,62 @@ const AnalysisPage = () => {
                     </div>
                 </div>
             </div>
+
+            <div className="explanation-section">
+                <h3>Understanding the Analysis</h3>
+                <p className="explanation-intro">
+                    This visualization uses <strong>Principal Component Analysis (PCA)</strong> to reduce 8 different player metrics
+                    into 2 dimensions, making it easier to see patterns and player archetypes.
+                </p>
+
+                <div className="explanation-grid">
+                    <div className="explanation-card">
+                        <h4>📊 What is PCA?</h4>
+                        <p>
+                            PCA finds the most important "directions" in the data. Instead of looking at all 8 metrics separately,
+                            it combines them into 2 principal components (PC1 and PC2) that capture the most variation in player styles.
+                        </p>
+                    </div>
+
+                    <div className="explanation-card">
+                        <h4>📈 The Metrics Used</h4>
+                        <ul>
+                            <li><strong>Points/Game</strong> - Overall offensive production</li>
+                            <li><strong>Assist/Goal Ratio</strong> - Playmaker vs pure scorer</li>
+                            <li><strong>Goal/Shot Ratio</strong> - Shooting efficiency</li>
+                            <li><strong>PP %</strong> - Special teams contribution</li>
+                            <li><strong>+/- per Game</strong> - Defensive responsibility</li>
+                            <li><strong>PIM per Game</strong> - Physical/aggressive play</li>
+                            <li><strong>Shots/Game</strong> - Shot volume</li>
+                            <li><strong>GWG/Game</strong> - Clutch performance</li>
+                        </ul>
+                    </div>
+
+                    <div className="explanation-card">
+                        <h4>🎯 Reading the Chart</h4>
+                        <p>
+                            <strong>X-Axis (PC1):</strong> Typically separates elite producers from role players,
+                            and can distinguish between playmakers and snipers.
+                        </p>
+                        <p>
+                            <strong>Y-Axis (PC2):</strong> Often differentiates play styles - physical vs finesse,
+                            defensive vs offensive focus, or shooting efficiency vs volume.
+                        </p>
+                        <p>
+                            <strong>Colors:</strong> The 4 colors represent clusters of similar players found using K-Means clustering.
+                        </p>
+                    </div>
+
+                    <div className="explanation-card">
+                        <h4>💡 What to Look For</h4>
+                        <p>
+                            Players close together have similar statistical profiles. Outliers represent unique play styles.
+                            The clusters help identify player archetypes like "Elite Playmakers", "Power Forwards",
+                            "Two-Way Players", or "Role Players".
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
