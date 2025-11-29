@@ -36,7 +36,7 @@ const MatchDetailPage = () => {
             <div className="detail-header">
                 <div className="team-detail away">
                     <img src={awayTeam.logo} alt={awayTeam.commonName.default} className="team-logo-large" />
-                    <span className="team-name-large">{awayTeam.name.default}</span>
+                    <span className="team-name-large">{awayTeam.commonName.default}</span>
                     <span className="score-large">{awayTeam.score}</span>
                 </div>
 
@@ -44,7 +44,7 @@ const MatchDetailPage = () => {
 
                 <div className="team-detail home">
                     <span className="score-large">{homeTeam.score}</span>
-                    <span className="team-name-large">{homeTeam.name.default}</span>
+                    <span className="team-name-large">{homeTeam.commonName.default}</span>
                     <img src={homeTeam.logo} alt={homeTeam.commonName.default} className="team-logo-large" />
                 </div>
             </div>
