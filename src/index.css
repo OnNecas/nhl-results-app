@@ -637,12 +637,13 @@ body {
 
 @media (max-width: 768px) {
   .standings-page {
-    padding: 0 0.5rem;
+    padding: 0;
   }
 
   .view-controls {
     gap: 0.75rem;
     margin-bottom: 2rem;
+    padding: 0 0.5rem;
   }
 
   .view-btn {
@@ -651,11 +652,12 @@ body {
   }
 
   .standings-group {
-    border-radius: 16px;
+    border-radius: 12px;
+    margin: 0 0.25rem 2rem 0.25rem;
   }
 
   .group-title {
-    padding: 1.25rem 1.5rem;
+    padding: 1rem 1rem;
     font-size: 1.1rem;
   }
 
@@ -694,15 +696,25 @@ body {
 }
 
 @media (max-width: 480px) {
+  .standings-group {
+    margin: 0 0.15rem 1.5rem 0.15rem;
+    border-radius: 8px;
+  }
+
+  .group-title {
+    padding: 0.9rem 0.75rem;
+    font-size: 1rem;
+  }
 
   .standings-table th,
   .standings-table td {
-    padding: 0.75rem 0.35rem;
+    padding: 0.75rem 0.25rem;
     font-size: 0.8rem;
   }
 
   .team-col {
     min-width: 130px;
+    padding-left: 0.5rem !important;
   }
 
   .table-logo {
