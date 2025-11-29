@@ -60,7 +60,7 @@ const MatchDetailPage = () => {
                                     <div className="goal-time">{goal.timeInPeriod}</div>
                                     <div className="goal-info">
                                         <div className="goal-scorer">
-                                            <img src={goal.teamAbbrev === awayTeam.abbrev ? awayTeam.logo : homeTeam.logo} alt="Team" className="goal-team-logo" />
+                                            <img src={goal.teamAbbrev.default === awayTeam.abbrev ? awayTeam.logo : homeTeam.logo} alt="Team" className="goal-team-logo" />
                                             <span className="player-name">{goal.name.default} ({goal.goalsToDate})</span>
                                         </div>
                                         <div className="goal-assists">
