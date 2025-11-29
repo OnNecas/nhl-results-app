@@ -1,11 +1,8 @@
-
-```
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import SchedulePage from './pages/SchedulePage';
 import ResultsPage from './pages/ResultsPage';
-
 import MatchDetailPage from './pages/MatchDetailPage';
 
 function App() {
@@ -30,4 +27,3 @@ function App() {
 }
 
 export default App;
-```
