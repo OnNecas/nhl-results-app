@@ -50,3 +50,22 @@ export const fetchRecentResults = async () => {
         throw error;
     }
 };
+
+export const fetchGameLanding = async (gameId) => {
+    try {
+        // Use Vercel serverless function in production, Vite proxy in development
+        const isDevelopment = import.meta.env.DEV;
+        const apiUrl = isDevelopment
+            ? `/api-nhl/v1/gamecenter/${gameId}/landing`
+            : `/api/game?id=${gameId}`;
+
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+            throw new Error('Failed to fetch game data');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching game landing:', error);
+        throw error;
+    }
+};
