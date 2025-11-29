@@ -50,6 +50,8 @@ const ShootingAnalysis = ({ players }) => {
                                 dataKey="x"
                                 name="Shots/Game"
                                 stroke="#94a3b8"
+                                domain={[0, 6]}
+                                tickCount={7}
                                 label={{ value: 'Shots per Game', position: 'bottom', fill: '#94a3b8' }}
                             />
                             <YAxis
