@@ -101,14 +101,44 @@ const AnalysisPage = () => {
         // Filter valid players
         const validPlayers = players.filter(p => p.gamesPlayed > 10);
 
-        // Select features - using correct API field names
-        const features = ['goals', 'assists', 'points', 'plusMinus', 'penaltyMinutes', 'ppPoints', 'shPoints', 'shots'];
+        // Create derived features that capture different aspects of player style
+        const enrichedPlayers = validPlayers.map(p => ({
+            ...p,
+            // Shooting efficiency vs volume
+            goalToShotRatio: p.shots > 0 ? p.goals / p.shots : 0,
+            // Playmaking vs scoring
+            assistToGoalRatio: p.goals > 0 ? p.assists / p.goals : 0,
+            // Special teams contribution
+            ppPercentage: p.points > 0 ? p.ppPoints / p.points : 0,
+            // Defensive responsibility
+            plusMinusPerGame: p.gamesPlayed > 0 ? p.plusMinus / p.gamesPlayed : 0,
+            // Physical play
+            pimPerGame: p.gamesPlayed > 0 ? p.penaltyMinutes / p.gamesPlayed : 0,
+            // Overall production
+            pointsPerGame: p.gamesPlayed > 0 ? p.points / p.gamesPlayed : 0,
+            // Shot volume
+            shotsPerGame: p.gamesPlayed > 0 ? p.shots / p.gamesPlayed : 0,
+            // Clutch performance
+            gwgPerGame: p.gamesPlayed > 0 ? p.gameWinningGoals / p.gamesPlayed : 0
+        }));
+
+        // Select features that capture different dimensions of play
+        const features = [
+            'pointsPerGame',      // Overall production
+            'assistToGoalRatio',  // Playmaker vs Scorer
+            'goalToShotRatio',    // Shooting efficiency
+            'ppPercentage',       // Special teams role
+            'plusMinusPerGame',   // Defensive impact
+            'pimPerGame',         // Physical/aggressive play
+            'shotsPerGame',       // Shot volume/aggression
+            'gwgPerGame'          // Clutch factor
+        ];
 
         // Prepare matrix with null handling
-        const matrix = validPlayers.map(p =>
+        const matrix = enrichedPlayers.map(p =>
             features.map(f => {
                 const val = p[f];
-                return (val === null || val === undefined || isNaN(val)) ? 0 : Number(val);
+                return (val === null || val === undefined || isNaN(val) || !isFinite(val)) ? 0 : Number(val);
             })
         );
 
@@ -129,7 +159,7 @@ const AnalysisPage = () => {
         const clusters = kMeans(pcaResult.transformed, 4);
 
         // Plot data
-        const plotData = validPlayers.map((p, i) => ({
+        const plotData = enrichedPlayers.map((p, i) => ({
             name: p.skaterFullName,
             team: p.teamAbbrevs,
             x: pcaResult.transformed[i][0],
@@ -208,9 +238,9 @@ const AnalysisPage = () => {
 
     return (
         <div className="analysis-page">
-            <h2 className="page-title">Player Clustering Analysis (PCA)</h2>
+            <h2 className="page-title">Player Style Analysis (PCA)</h2>
             <p className="analysis-subtitle">
-                Analyzing top players based on offensive metrics. Players grouped into 4 clusters.
+                Analyzing players based on play style metrics: shooting efficiency, playmaking, physicality, and defensive impact.
             </p>
 
             <div className="analysis-grid">
@@ -234,6 +264,7 @@ const AnalysisPage = () => {
                                                     <div>Points: {d.points}</div>
                                                     <div>Goals: {d.goals}</div>
                                                     <div>Assists: {d.assists}</div>
+                                                    <div>+/-: {d.plusMinus}</div>
                                                 </div>
                                             </div>
                                         );
@@ -257,10 +288,12 @@ const AnalysisPage = () => {
                         <div className="pc-explanation">
                             <h4>PC1 (X-Axis)</h4>
                             <p>Driven by: {loadings?.pc1.map(l => l.feature).join(', ')}</p>
+                            <small>Separates players by production level and play style</small>
                         </div>
                         <div className="pc-explanation">
                             <h4>PC2 (Y-Axis)</h4>
                             <p>Driven by: {loadings?.pc2.map(l => l.feature).join(', ')}</p>
+                            <small>Differentiates scorer vs playmaker vs physical roles</small>
                         </div>
                     </div>
                 </div>
