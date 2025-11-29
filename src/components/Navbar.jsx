@@ -18,6 +18,12 @@ const Navbar = () => {
                 >
                     Results
                 </NavLink>
+                <NavLink
+                    to="/standings"
+                    className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                >
+                    Standings
+                </NavLink>
             </div>
         </nav>
     );

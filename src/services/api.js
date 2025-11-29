@@ -69,3 +69,22 @@ export const fetchGameLanding = async (gameId) => {
         throw error;
     }
 };
+
+export const fetchStandings = async () => {
+    try {
+        // Use Vercel serverless function in production, Vite proxy in development
+        const isDevelopment = import.meta.env.DEV;
+        const apiUrl = isDevelopment
+            ? '/api-nhl/v1/standings/now'
+            : '/api/standings';
+
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+            throw new Error('Failed to fetch standings');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching standings:', error);
+        throw error;
+    }
+};
