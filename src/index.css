@@ -597,6 +597,25 @@ body {
   font-weight: 700;
 }
 
+/* Playoff Position Highlighting */
+.playoff-division {
+  border-left: 4px solid #4ade80;
+  background: linear-gradient(90deg, rgba(74, 222, 128, 0.12), transparent);
+}
+
+.playoff-wildcard {
+  border-left: 4px solid #fbbf24;
+  background: linear-gradient(90deg, rgba(251, 191, 36, 0.12), transparent);
+}
+
+.playoff-division:hover {
+  background: linear-gradient(90deg, rgba(74, 222, 128, 0.18), rgba(56, 189, 248, 0.08));
+}
+
+.playoff-wildcard:hover {
+  background: linear-gradient(90deg, rgba(251, 191, 36, 0.18), rgba(56, 189, 248, 0.08));
+}
+
 /* Responsive Standings Table */
 @media (max-width: 1024px) {
 

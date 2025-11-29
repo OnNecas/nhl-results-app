@@ -56,6 +56,31 @@ const StandingsPage = () => {
     // Filter to ensure we only show groups that exist in data
     const displayGroups = orderedGroups.filter(name => groupedStandings[name]);
 
+    // Determine playoff positions
+    const getPlayoffStatus = (team) => {
+        if (viewMode === 'division') {
+            // Top 3 in each division make playoffs
+            if (team.divisionSequence <= 3) {
+                return 'playoff-division';
+            }
+            // Check for wild card (top 2 non-division-leaders in each conference)
+            if (team.wildcardSequence > 0 && team.wildcardSequence <= 2) {
+                return 'playoff-wildcard';
+            }
+        } else {
+            // In conference view, top 8 make playoffs
+            if (team.conferenceSequence <= 8) {
+                // Determine if they're a division leader (top 3) or wild card
+                if (team.divisionSequence <= 3) {
+                    return 'playoff-division';
+                } else {
+                    return 'playoff-wildcard';
+                }
+            }
+        }
+        return null;
+    };
+
     return (
         <div className="standings-page">
             <h2 className="page-title">Standings</h2>
@@ -95,26 +120,29 @@ const StandingsPage = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {groupedStandings[groupName].map((team) => (
-                                        <tr key={team.teamAbbrev.default}>
-                                            <td className="rank-col">{viewMode === 'division' ? team.divisionSequence : team.conferenceSequence}</td>
-                                            <td className="team-col">
-                                                <div className="team-cell">
-                                                    <img src={team.teamLogo} alt={team.teamCommonName.default} className="table-logo" />
-                                                    <span className="table-team-name">{team.teamCommonName.default}</span>
-                                                </div>
-                                            </td>
-                                            <td>{team.gamesPlayed}</td>
-                                            <td>{team.wins}</td>
-                                            <td>{team.losses}</td>
-                                            <td>{team.otLosses}</td>
-                                            <td className="points-cell">{team.points}</td>
-                                            <td className={team.goalDifferential > 0 ? 'diff-pos' : team.goalDifferential < 0 ? 'diff-neg' : ''}>
-                                                {team.goalDifferential > 0 ? '+' : ''}{team.goalDifferential}
-                                            </td>
-                                            <td>{team.streakCode}{team.streakCount}</td>
-                                        </tr>
-                                    ))}
+                                    {groupedStandings[groupName].map((team) => {
+                                        const playoffStatus = getPlayoffStatus(team);
+                                        return (
+                                            <tr key={team.teamAbbrev.default} className={playoffStatus || ''}>
+                                                <td className="rank-col">{viewMode === 'division' ? team.divisionSequence : team.conferenceSequence}</td>
+                                                <td className="team-col">
+                                                    <div className="team-cell">
+                                                        <img src={team.teamLogo} alt={team.teamCommonName.default} className="table-logo" />
+                                                        <span className="table-team-name">{team.teamCommonName.default}</span>
+                                                    </div>
+                                                </td>
+                                                <td>{team.gamesPlayed}</td>
+                                                <td>{team.wins}</td>
+                                                <td>{team.losses}</td>
+                                                <td>{team.otLosses}</td>
+                                                <td className="points-cell">{team.points}</td>
+                                                <td className={team.goalDifferential > 0 ? 'diff-pos' : team.goalDifferential < 0 ? 'diff-neg' : ''}>
+                                                    {team.goalDifferential > 0 ? '+' : ''}{team.goalDifferential}
+                                                </td>
+                                                <td>{team.streakCode}{team.streakCount}</td>
+                                            </tr>
+                                        );
+                                    })}
                                 </tbody>
                             </table>
                         </div>
