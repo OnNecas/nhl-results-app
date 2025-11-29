@@ -799,6 +799,36 @@ body {
   margin-top: 0.5rem;
 }
 
+.analysis-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 1rem;
+}
+
+.tab-button {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 6px;
+}
+
+.tab-button:hover {
+  color: #e2e8f0;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.tab-button.active {
+  color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.1);
+}
+
 .cluster-insights {
   margin-top: 2rem;
   padding: 1.5rem;
@@ -934,6 +964,31 @@ body {
 
 .explanation-card strong {
   color: #e2e8f0;
+}
+
+.quadrant-explanation {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.quadrant-explanation:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.quadrant-explanation h4 {
+  margin: 0 0 0.5rem 0;
+  color: #e2e8f0;
+  font-size: 1rem;
+}
+
+.quadrant-explanation p {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  line-height: 1.5;
 }
 
 .custom-tooltip {
