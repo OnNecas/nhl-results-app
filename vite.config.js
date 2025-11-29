@@ -6,6 +6,12 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
+      '/api-nhl/stats': {
+        target: 'https://api.nhle.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api-nhl\/stats/, '/stats'),
+        secure: false,
+      },
       '/api-nhl': {
         target: 'https://api-web.nhle.com',
         changeOrigin: true,

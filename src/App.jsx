@@ -5,6 +5,7 @@ import SchedulePage from './pages/SchedulePage';
 import ResultsPage from './pages/ResultsPage';
 import MatchDetailPage from './pages/MatchDetailPage';
 import StandingsPage from './pages/StandingsPage';
+import AnalysisPage from './pages/AnalysisPage';
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                         <Route path="/schedule" element={<SchedulePage />} />
                         <Route path="/results" element={<ResultsPage />} />
                         <Route path="/standings" element={<StandingsPage />} />
+                        <Route path="/analysis" element={<AnalysisPage />} />
                         <Route path="/game/:id" element={<MatchDetailPage />} />
                     </Routes>
                 </main>

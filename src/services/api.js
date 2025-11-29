@@ -88,3 +88,26 @@ export const fetchStandings = async () => {
         throw error;
     }
 };
+
+export const fetchPlayerStats = async () => {
+    try {
+        // Use Vercel serverless function in production, Vite proxy in development
+        const isDevelopment = import.meta.env.DEV;
+
+        // Query params for top 200 players by points (same as in api/stats.js)
+        const queryParams = '?isAggregate=false&isGame=false&sort=%5B%7B%22property%22:%22points%22,%22direction%22:%22DESC%22%7D%5D&start=0&limit=200&factCayenneExp=gamesPlayed%3E=1&cayenneExp=gameTypeId=2%20and%20seasonId%3C=20242025%20and%20seasonId%3E=20242025';
+
+        const apiUrl = isDevelopment
+            ? `/api-nhl/stats/rest/en/skater/summary${queryParams}`
+            : '/api/stats';
+
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+            throw new Error('Failed to fetch player stats');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching player stats:', error);
+        throw error;
+    }
+};
